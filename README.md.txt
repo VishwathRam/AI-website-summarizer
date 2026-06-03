@@ -1,0 +1,1 @@
+This app streamlines the process of summarizing textual content from websites. It integrates LangChain with the Groq API for natural language processing tasks, providing users with concise summaries of various content sources.
