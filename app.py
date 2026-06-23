@@ -5,9 +5,9 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import YoutubeLoader,UnstructuredURLLoader
 
 
-## sstreamlit APP
+## streamlit
 st.set_page_config(page_title="LangChain: Summarize Text from YT or Website", page_icon="🦜")
-st.title("🦜 LangChain: Summarize Text from YT or Website")
+st.title("LangChain: Summarize Text from YT or Website")
 st.subheader('Summarize URL')
 
 
