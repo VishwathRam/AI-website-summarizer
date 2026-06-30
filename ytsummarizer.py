@@ -158,7 +158,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = update.effective_chat.id
     user_sessions[chat_id] = True
     await update.message.reply_text(
-        "👋 Hi! Send me a YouTube link (English/Malayalam). I will summarize it and generate a PDF.\nType /help to see commands."
+        "Enter a YouTube link (English). I will summarize it and generate a PDF.\nType /help to see commands."
     )
 async def cancel_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if "active_process" in context.user_data and context.user_data["active_process"] != "idle":
@@ -209,17 +209,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     context.user_data["active_process"] = "summarizing"
-    await context.bot.send_message(chat_id, "📥 Fetching transcript... Please wait ⏳")
+    await context.bot.send_message(chat_id, " Fetching transcript... Please wait ⏳")
 
     try:
-        # 1️⃣ Transcribe audio
+        # Transcribe audio
         transcript, lang = await asyncio.to_thread(get_transcript, url)
 
         if context.user_data.get("active_process") == "idle":
             await context.bot.send_message(chat_id, "❌ Operation cancelled.")
             return
 
-        # 2️⃣ Fast short summary for chat
+        # Fast short summary for chat
         if lang == "ml":
             short_translated = await asyncio.to_thread(translate_ml_to_en, transcript[:1000])
         else:
@@ -234,7 +234,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await context.bot.send_message(chat_id, "❌ Operation cancelled.")
             return
 
-        # 3️⃣ Detailed summary for PDF in background
+        # Detailed summary for PDF in background
         await context.bot.send_message(chat_id, "📄 Generating detailed PDF summary... This may take a while ⏳")
 
         if lang == "ml":
@@ -273,7 +273,7 @@ def main():
     app.add_handler(CommandHandler("cancel", cancel_command))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    print("🚀 Bot running...")
+    print(" Bot running...")
     app.run_polling()
 
 if __name__ == "__main__":
